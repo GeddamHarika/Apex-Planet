@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 3 - Advanced Styling and JavaScript</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      line-height: 1.6;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      color: #176B87;
+      text-align: center;
+    }
+
+    .responsive-box {
+      background-color: #b4e4ff;
+      padding: 20px;
+      margin: 10px 0;
+      text-align: center;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .responsive-box {
+        background-color: #f7c8e0;
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .responsive-box {
+        background-color: #ffc9b9;
+        font-size: 16px;
+      }
+    }
+
+    .section {
+      margin-top: 30px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 8px;
+      font-size: 16px;
+      background-color: #176B87;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #104e66;
+    }
+
+    #result, #joke {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Task 3 - Advanced Styling and JavaScript</h1>
+
+ 
+  <div class="responsive-box">
+    <p>This box adjusts layout, font size, and color based on screen size.</p>
+    <p>Resize your browser to see it in action!</p>
+  </div>
+
+  
+  <div class="section">
+    <h2>Interactive Quiz</h2>
+    <p id="question">What is the capital of France?</p>
+    <button onclick="checkAnswer('Paris')">Paris</button>
+    <button onclick="checkAnswer('London')">London</button>
+    <button onclick="checkAnswer('Rome')">Rome</button>
+    <p id="result"></p>
+  </div>
+
+ 
+  <div class="section">
+    <h2>Joke of the Moment</h2>
+    <button onclick="getJoke()">Get a Joke</button>
+    <p id="joke"></p>
+  </div>
+  <script>
+    function checkAnswer(answer) {
+      const correct = "Paris";
+      const result = document.getElementById("result");
+      if (answer === correct) {
+        result.textContent = "Correct! 🎉";
+        result.style.color = "green";
+      } else {
+        result.textContent = "Oops! Try again.";
+        result.style.color = "red";
+      }
+    }
+    function getJoke() {
+      fetch("https://icanhazdadjoke.com/", {
+        headers: {
+          Accept: "application/json"
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("joke").textContent = data.joke;
+      })
+      .catch(error => {
+        document.getElementById("joke").textContent = "Failed to fetch joke 😢";
+        console.error(error);
+      });
+    }
+  </script>
+</body>
+</html>
