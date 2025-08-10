@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Capstone E-Commerce</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; }
+  header { background: #2a9d8f; color: white; padding: 15px; text-align: center; }
+  nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
+  .container { padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+  .product { border: 1px solid #ccc; padding: 15px; border-radius: 5px; text-align: center; background: white; }
+  .product img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
+  button { background: #264653; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 4px; }
+  button:hover { background: #1d3557; }
+  .cart { position: fixed; right: 0; top: 0; background: white; border-left: 2px solid #ccc; height: 100%; width: 300px; padding: 15px; overflow-y: auto; }
+  .cart h3 { margin-top: 0; }
+  .cart-item { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  footer { background: #264653; color: white; text-align: center; padding: 10px; margin-top: 20px; }
+  @media(max-width:600px) { .cart { width: 100%; height: auto; position: static; border: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Capstone E-Commerce</h1>
+  <nav>
+    <a href="#products">Products</a>
+    <a href="#cart">Cart</a>
+  </nav>
+</header>
+
+<section id="products">
+  <div class="container" id="productList"></div>
+</section>
+
+<aside class="cart" id="cart">
+  <h3>Shopping Cart</h3>
+  <div id="cartItems"></div>
+  <hr>
+  <p><strong>Total:</strong> ₹<span id="totalPrice">0</span></p>
+</aside>
+
+<footer>
+  <p>© 2025 Harika Geddam | Capstone Project</p>
+</footer>
+
+<script>
+
+const products = [
+  { id: 1, name: "Laptop", price: 50000, image: "https://via.placeholder.com/300x200?text=Laptop" },
+  { id: 2, name: "Phone", price: 15000, image: "https://via.placeholder.com/300x200?text=Phone" },
+  { id: 3, name: "Book", price: 300, image: "https://via.placeholder.com/300x200?text=Book" },
+  { id: 4, name: "Headphones", price: 2000, image: "https://via.placeholder.com/300x200?text=Headphones" }
+];
+
+
+let cart = [];
+
+function renderProducts() {
+  const productList = document.getElementById('productList');
+  productList.innerHTML = '';
+  products.forEach(p => {
+    const product = document.createElement('div');
+    product.className = 'product';
+    product.innerHTML = `
+      <img src="${p.image}" loading="lazy" alt="${p.name}">
+      <h4>${p.name}</h4>
+      <p>₹${p.price}</p>
+      <button onclick="addToCart(${p.id})">Add to Cart</button>
+    `;
+    productList.appendChild(product);
+  });
+}
+
+function addToCart(id) {
+  const item = products.find(p => p.id === id);
+  cart.push(item);
+  renderCart();
+}
+
+function renderCart() {
+  const cartItems = document.getElementById('cartItems');
+  const totalPrice = document.getElementById('totalPrice');
+  cartItems.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    total += item.price;
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        <span>${item.name}</span>
+        <span>₹${item.price}</span>
+      </div>
+    `;
+  });
+  totalPrice.textContent = total;
+}
+
+
+renderProducts();
+</script>
+
+</body>
+</html>
